@@ -1,0 +1,19 @@
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: xu-cheng/latex-action@v4
+        with:
+          root_file: resume.tex
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: resume-ianick-noejovich
+          path: resume.pdf
