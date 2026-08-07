@@ -1,11 +1,13 @@
 on:
   push:
-    branches: ["main"]
+    branches:
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
 
@@ -17,3 +19,13 @@ jobs:
         with:
           name: resume-ianick-noejovich
           path: resume.pdf
+
+      - uses: softprops/action-gh-release@v3
+        with:
+          tag_name: latest
+          name: latest
+          body: ${{ github.sha }}
+          files: resume.pdf
+          make_latest: "true"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
